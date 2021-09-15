@@ -44,7 +44,7 @@ public class Elfo extends Thread {
                 synchronized(papaiNoel){
                     //papaiNoel.wait();
                     
-                    papaiNoel.acordar();
+                    papaiNoel.acordar(); 
                     papaiNoel.discutirProjetos();
                     papaiNoel.dormir();
                     //papaiNoel.notify();
