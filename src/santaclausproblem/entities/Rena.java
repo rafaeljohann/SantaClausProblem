@@ -66,20 +66,19 @@ public class Rena extends Thread {
                     //papaiNoel.notify();
                 }
             }else{
-                int numero = gerador.nextInt((21));
-
-                if(numero == 20){
-                    if(renas.getVoltouFeriasRenas(this.getIdRena())){
-                        System.out.println("RENA " + this.getIdRena()+ ": Continuo aguardando para acordar Papai Noel...");
-                    }else{
-                        System.out.println("RENA " + this.getIdRena()+ ": Voltei de férias..." );
-                        renas.addRenasVoltouFerias(this.idRena);
-                    }
-                }else{
-                    this.tirarFerias();
-                } 
                 
+                if(renas.getVoltouFeriasRenas(this.getIdRena())){
+                    System.out.println("RENA " + this.getIdRena()+ ": Continuo aguardando para acordar Papai Noel...");
+                }else{
+                    int numero = gerador.nextInt((11));
+                    if(numero == 10){
+                        System.out.println("RENA " + this.getIdRena()+ ": Voltei de férias..." );
+                        renas.addRenasVoltouFerias(this.idRena);  
+                    }else{
+                        this.tirarFerias();
+                    }                
                 renas.notifyAll();
+                }
             }
         }
     }

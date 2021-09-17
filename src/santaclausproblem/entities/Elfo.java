@@ -70,16 +70,18 @@ public class Elfo extends Thread {
                 /*if(papaiNoel.isAcordado()){
                     
                 }*/
-                this.fabricarBrinquedos();
                 
-                // Gera número randômico de 0 a 5 para definir problemas na fabricação de brinquedos
-                int numero = gerador.nextInt((6));
-                if(numero == 5){
-                    if(elfos.getProblemasElfos(this.getIdElfo())){
-                        System.out.println("ELFO " + this.getIdElfo() + ": Continuo com o problema...");
-                    }else{
+                if(elfos.getProblemasElfos(this.getIdElfo())){
+                    System.out.println("ELFO " + this.getIdElfo() + ": Continuo com o problema...");
+                    
+                }else{
+                    // Gera número randômico de 0 a 5 para definir problemas na fabricação de brinquedos
+                    int numero = gerador.nextInt((6));
+                    if(numero == 5){
                         System.out.println("ELFO " + this.getIdElfo() + ": Ops, tive um problema aqui!" );
-                        elfos.addElfosProblemasBrinquedos(this.idElfo);
+                        elfos.addElfosProblemasBrinquedos(this.idElfo); 
+                    }else{
+                        this.fabricarBrinquedos();
                     }
                 }
                 
