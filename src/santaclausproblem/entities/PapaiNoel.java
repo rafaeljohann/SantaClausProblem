@@ -27,15 +27,15 @@ public class PapaiNoel extends Thread {
     }
     
     public void amarrarRenaTreno(){
-        System.out.println("Amarrando a rena...");
+        System.out.println("PAPAI NOEL: Amarrando a rena...");
     }
     
     public void desamarrarRenaTreno(){
-        System.out.println("Desamarrando a rena...");
+        System.out.println("PAPAI NOEL: Desamarrando a rena...");
     }
     
     public void distribuirBrinquedos(){
-        System.out.println("Distribuindo brinquedos...");
+        System.out.println("PAPAI NOEL: Distribuindo brinquedos...");
     }
     
     public void discutirProjetos(){

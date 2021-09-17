@@ -25,27 +25,28 @@ public class SantaClausProblem {
         PapaiNoel papaiNoel = new PapaiNoel();
         List<Elfo> elfos = new ArrayList();
         List<Rena> renas = new ArrayList(); 
-        ElfosRenas listaElfosRenas = new ElfosRenas();
+        ElfosRenas listaElfos = new ElfosRenas();
+        ElfosRenas listaRenas = new ElfosRenas();
         int qtdRenas = 0;
         
         papaiNoel.start();
         
-        for(int i = 0; i < 3; i++){ // modificar contador depois
-            Elfo elfo = new Elfo(listaElfosRenas, papaiNoel);
-            elfos.add(elfo);
-        }
-        
-        elfos.forEach((elfo) -> {
-            elfo.start();
-        });
-        
-        for(int i = 0; i < 1; i++){ // modificar contador depois
-            Rena rena = new Rena();
+        for(int i = 0; i < 9; i++){ // modificar contador depois
+            Rena rena = new Rena(i + 1, listaRenas, papaiNoel);
             renas.add(rena);
         }
         
         renas.forEach((rena) -> {
             rena.start();
+        });
+        
+        for(int i = 0; i < 10; i++){ // modificar contador depois
+            Elfo elfo = new Elfo(i + 1, listaElfos, papaiNoel, listaRenas);
+            elfos.add(elfo);
+        }
+        
+        elfos.forEach((elfo) -> {
+            elfo.start();
         });
         
         /*for(Rena rena : renas){

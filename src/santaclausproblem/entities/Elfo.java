@@ -5,6 +5,7 @@
  */
 package santaclausproblem.entities;
 
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,26 +18,40 @@ public class Elfo extends Thread {
     private ElfosRenas elfos;
     boolean problemaBrinquedos;
     private PapaiNoel papaiNoel;
+    private ElfosRenas renas;
+    Random gerador = new Random();
     
-    public Elfo(ElfosRenas elfos, PapaiNoel papaiNoel){
+    int idElfo;
+    
+    public Elfo(int idElfo, ElfosRenas elfos, PapaiNoel papaiNoel, ElfosRenas renas){
         super();
+        this.idElfo = idElfo;
         this.elfos = elfos;
         this.papaiNoel = papaiNoel;
+        this.renas = renas;
+    }
+
+    public int getIdElfo() {
+        return idElfo;
+    }
+
+    public void setIdElfo(int idElfo) {
+        this.idElfo = idElfo;
     }
     
     public void fabricarBrinquedos(){
-        System.out.println("ELFOS: Fabricando brinquedos...");
+        System.out.println("ELFO " + this.getIdElfo() + ": Fabricando brinquedos...");
     }
     
     public void reunirPapaiNoel(){
-        System.out.println("ELFOS: Se reunindo com o Papai Noel...");
+        System.out.println("ELFO " + this.getIdElfo() + ": Se reunindo com o Papai Noel...");
     }
     
     public void viver() throws InterruptedException{
         synchronized (elfos) {
-            if(elfos.getProblemasElfos() == 3){ //Se tem no mínimo 3 elfos com problemas
-                System.out.println("ELFOS: Estamos com problemas!");
-                elfos.removeElfosQtdProblemasBrinquedos(3);
+            if(elfos.elfosProblemasBrinquedos.size() == 3 && renas.renasVoltaramFeriasTropicos.size() < 9){ //Se tem no mínimo 3 elfos com problemas
+                System.out.println("ELFO " + this.getIdElfo() + ": Estamos com problemas!");
+                elfos.removeElfosProblemasBrinquedos();
                 
                 this.reunirPapaiNoel();
                 
@@ -57,7 +72,16 @@ public class Elfo extends Thread {
                 }*/
                 this.fabricarBrinquedos();
                 
-                elfos.addElfosQtdProblemasBrinquedos(1); // verificar como disparar essa ação.
+                // Gera número randômico de 0 a 5 para definir problemas na fabricação de brinquedos
+                int numero = gerador.nextInt((6));
+                if(numero == 5){
+                    if(elfos.getProblemasElfos(this.getIdElfo())){
+                        System.out.println("ELFO " + this.getIdElfo() + ": Continuo com o problema...");
+                    }else{
+                        System.out.println("ELFO " + this.getIdElfo() + ": Ops, tive um problema aqui!" );
+                        elfos.addElfosProblemasBrinquedos(this.idElfo);
+                    }
+                }
                 
                 elfos.notifyAll();
                 /*this.produtos.setAddEstoque(valor);

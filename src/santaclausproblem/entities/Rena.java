@@ -5,36 +5,103 @@
  */
 package santaclausproblem.entities;
 
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Rafael
  */
 public class Rena extends Thread {
     private boolean ferias;
+    int idRena;
+    private ElfosRenas renas;
+    private PapaiNoel papaiNoel;
+    Random gerador = new Random();
     
-    public Rena(){
-        
+    public Rena(int idRena, ElfosRenas renas, PapaiNoel papaiNoel){
+        this.idRena = idRena;
+        this.renas = renas;
+        this.papaiNoel = papaiNoel;
+    }
+
+    public int getIdRena() {
+        return idRena;
+    }
+
+    public void setIdRena(int idRena) {
+        this.idRena = idRena;
     }
     
     public void entregarPresentes(){
-        System.out.println("Entregando presentes...");
+        System.out.println("RENA " + this.getIdRena() + ": Entregando presentes...");
     }
     
     public void tirarFerias(){
-        System.out.println("Tirando férias. Até o ano que vem!");
+        System.out.println("RENA " + this.getIdRena() + ": Tirando férias...");
+    }
+    
+    public void acordarPapaiNoel(){
+        System.out.println("RENA " + this.getIdRena()+ ": Acordar o Papai Noel...");
     }
     
     public void viver(){
-        this.tirarFerias();
+        synchronized (renas) {
+            if(renas.renasVoltaramFeriasTropicos.size() == 9){ //Se as 9 renas voltaram de férias
+                System.out.println("RENA " + this.getIdRena()+ ": Voltamos de férias!");
+                renas.removeRenasFerias();
+                
+                this.acordarPapaiNoel();
+                
+                //notifica papai noel
+                synchronized(papaiNoel){
+                    //papaiNoel.wait();
+                    
+                    papaiNoel.acordar(); 
+                    papaiNoel.amarrarRenaTreno();
+                    papaiNoel.distribuirBrinquedos();
+                    papaiNoel.desamarrarRenaTreno();
+                    papaiNoel.dormir();
+                    //papaiNoel.notify();
+                }
+            }else{
+                int numero = gerador.nextInt((21));
+
+                if(numero == 20){
+                    if(renas.getVoltouFeriasRenas(this.getIdRena())){
+                        System.out.println("RENA " + this.getIdRena()+ ": Continuo aguardando para acordar Papai Noel...");
+                    }else{
+                        System.out.println("RENA " + this.getIdRena()+ ": Voltei de férias..." );
+                        renas.addRenasVoltouFerias(this.idRena);
+                    }
+                }else{
+                    this.tirarFerias();
+                } 
+                
+                renas.notifyAll();
+            }
+        }
     }
     
     @Override
     public void run(){
-        this.tirarFerias();
+        while (true) {
+            this.viver();
+            try{
+                Thread.sleep((int)(Math.random() * 500));
+            }
+            catch (InterruptedException e){
+                e.printStackTrace();
+            }
+        //this.tirarFerias();
         
-        System.out.println("RENA: Voltou de férias");
-        this.ferias = false;
+        
+        
+      //  System.out.println("RENA " + this.getIdRena() + ": Voltou de férias");
+        //this.ferias = false;
         //this.entregarPresentes();
+        }
     }
 
     public boolean isFerias() {
