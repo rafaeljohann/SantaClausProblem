@@ -6,18 +6,15 @@
 package santaclausproblem.entities;
 
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author Rafael
  */
 public class Rena extends Thread {
-    private boolean ferias;
     int idRena;
-    private ElfosRenas renas;
-    private PapaiNoel papaiNoel;
+    private final ElfosRenas renas;
+    private final PapaiNoel papaiNoel;
     Random gerador = new Random();
     
     public Rena(int idRena, ElfosRenas renas, PapaiNoel papaiNoel){
@@ -48,37 +45,32 @@ public class Rena extends Thread {
     
     public void viver(){
         synchronized (renas) {
-            if(renas.renasVoltaramFeriasTropicos.size() == 9){ //Se as 9 renas voltaram de férias
-                System.out.println("RENA " + this.getIdRena()+ ": Voltamos de férias!");
-                renas.removeRenasFerias();
-                
-                this.acordarPapaiNoel();
-                
-                //notifica papai noel
-                synchronized(papaiNoel){
-                    //papaiNoel.wait();
-                    
-                    papaiNoel.acordar(); 
-                    papaiNoel.amarrarRenaTreno();
-                    papaiNoel.distribuirBrinquedos();
-                    papaiNoel.desamarrarRenaTreno();
-                    papaiNoel.dormir();
-                    //papaiNoel.notify();
-                }
-            }else{
-                
                 if(renas.getVoltouFeriasRenas(this.getIdRena())){
                     System.out.println("RENA " + this.getIdRena()+ ": Continuo aguardando para acordar Papai Noel...");
                 }else{
+                    this.tirarFerias();
+                    
                     int numero = gerador.nextInt((11));
                     if(numero == 10){
                         System.out.println("RENA " + this.getIdRena()+ ": Voltei de férias..." );
-                        renas.addRenasVoltouFerias(this.idRena);  
-                    }else{
-                        this.tirarFerias();
-                    }                
+                        renas.addRenasVoltouFerias(this.idRena); 
+                    
+                        if(renas.renasVoltaramFeriasTropicos.size() == 9){ //Se as 9 renas voltaram de férias
+                            System.out.println("RENA " + this.getIdRena()+ ": Voltamos de férias!");
+                            renas.removeRenasFerias();
+
+                            this.acordarPapaiNoel();
+
+                            synchronized(papaiNoel){
+                                papaiNoel.acordar(); 
+                                papaiNoel.amarrarRenaTreno();
+                                papaiNoel.distribuirBrinquedos();
+                                papaiNoel.desamarrarRenaTreno();
+                                papaiNoel.dormir();
+                            }
+                        }
+                    }               
                 renas.notifyAll();
-                }
             }
         }
     }
@@ -93,21 +85,6 @@ public class Rena extends Thread {
             catch (InterruptedException e){
                 e.printStackTrace();
             }
-        //this.tirarFerias();
-        
-        
-        
-      //  System.out.println("RENA " + this.getIdRena() + ": Voltou de férias");
-        //this.ferias = false;
-        //this.entregarPresentes();
         }
-    }
-
-    public boolean isFerias() {
-        return ferias;
-    }
-
-    public void setFerias(boolean ferias) {
-        this.ferias = ferias;
     }
 }

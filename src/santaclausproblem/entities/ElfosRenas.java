@@ -6,7 +6,6 @@
 package santaclausproblem.entities;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -16,69 +15,34 @@ import java.util.List;
 public class ElfosRenas {
     int qtdElfos=10;
     int elfosQtdProblemasBrinquedos;
-    List<Integer> elfosProblemasBrinquedos = new ArrayList<Integer>();
-    List<Integer> renasVoltaramFeriasTropicos = new ArrayList<Integer>();
-
-    public int getElfosQtdProblemasBrinquedos() {
-        return elfosQtdProblemasBrinquedos;
-    }
-
-    public void setElfosQtdProblemasBrinquedos(int elfosQtdProblemasBrinquedos) {
-        this.elfosQtdProblemasBrinquedos = this.elfosQtdProblemasBrinquedos - elfosQtdProblemasBrinquedos;
-    }
-    
-    private int[] elfos = new int[qtdElfos];
-    
+    List<Integer> elfosProblemasBrinquedos = new ArrayList<>();
+    List<Integer> renasVoltaramFeriasTropicos = new ArrayList<>();
     
     public ElfosRenas() {
-        for (int i = 0; i < qtdElfos; i++) {
-            elfos[i]=0;
-        }
         
-        elfosProblemasBrinquedos = new ArrayList<Integer>();
     }
     
     public boolean getProblemasElfos(int idElfo) {
-        if(this.elfosProblemasBrinquedos.contains(idElfo) == true){
-            return true;
-        }else{
-            return false;
-        }
-    }
-    
-    public boolean getVoltouFeriasRenas(int idRena) {
-        if(this.renasVoltaramFeriasTropicos.contains(idRena) == true){
-            return true;
-        }else{
-            return false;
-        }
+        return this.elfosProblemasBrinquedos.contains(idElfo) == true;
     }
     
     public void addElfosProblemasBrinquedos(int idElfo){
         this.elfosProblemasBrinquedos.add(idElfo);
     }
     
-    public void addRenasVoltouFerias(int idRena){
-        this.renasVoltaramFeriasTropicos.add(idRena);
-    }
-    
     public void removeElfosProblemasBrinquedos(){
         this.elfosProblemasBrinquedos.clear();
     }
     
+    public boolean getVoltouFeriasRenas(int idRena) {
+        return this.renasVoltaramFeriasTropicos.contains(idRena) == true;
+    }
+    
+    public void addRenasVoltouFerias(int idRena){
+        this.renasVoltaramFeriasTropicos.add(idRena);
+    }
+  
     public void removeRenasFerias(){
         this.renasVoltaramFeriasTropicos.clear();
     }
-    
-    /*public int setAddEstoque(int arg) {
-        int produto=arg;
-        for (int i = 0; i < qtdProdutos; i++) {
-            if(produtos[i]==0){
-                produtos[i]=produto;
-                break;
-            }
-        }
-        return produto;
-    }*/
-    
 }

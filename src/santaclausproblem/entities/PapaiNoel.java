@@ -11,8 +11,6 @@ package santaclausproblem.entities;
  */
 public class PapaiNoel extends Thread {
     
-    private boolean acordado;
-    
     public PapaiNoel(){
         
     }
@@ -23,7 +21,6 @@ public class PapaiNoel extends Thread {
     
     public void acordar(){
         System.out.println("PAPAI NOEL: Acordou...");
-        this.acordado = true;
     }
     
     public void amarrarRenaTreno(){
@@ -46,23 +43,12 @@ public class PapaiNoel extends Thread {
     public void run(){
         while (true) {
             this.dormir();
-            this.acordado = false;
             try{
-                Thread.sleep((int)(Math.random() * 500));
+                Thread.sleep((int)(Math.random() * 50));
             }
             catch (InterruptedException e){
                 e.printStackTrace();
             }
         }
     }
-
-    public boolean isAcordado() {
-        return acordado;
-    }
-
-    public void setAcordado(boolean acordado) {
-        this.acordado = acordado;
-    }
-    
-
 }

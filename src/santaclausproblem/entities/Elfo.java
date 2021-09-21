@@ -15,10 +15,9 @@ import java.util.logging.Logger;
  */
 public class Elfo extends Thread {
     
-    private ElfosRenas elfos;
-    boolean problemaBrinquedos;
-    private PapaiNoel papaiNoel;
-    private ElfosRenas renas;
+    private final ElfosRenas elfos;
+    private final PapaiNoel papaiNoel;
+    private final ElfosRenas renas;
     Random gerador = new Random();
     
     int idElfo;
@@ -49,46 +48,36 @@ public class Elfo extends Thread {
     
     public void viver() throws InterruptedException{
         synchronized (elfos) {
-            if(elfos.elfosProblemasBrinquedos.size() == 3 && renas.renasVoltaramFeriasTropicos.size() < 9){ //Se tem no mínimo 3 elfos com problemas
-                System.out.println("ELFO " + this.getIdElfo() + ": Estamos com problemas!");
-                elfos.removeElfosProblemasBrinquedos();
-                
-                this.reunirPapaiNoel();
-                
-                //notifica papai noel
-                synchronized(papaiNoel){
-                    //papaiNoel.wait();
-                    
-                    papaiNoel.acordar(); 
-                    papaiNoel.discutirProjetos();
-                    papaiNoel.dormir();
-                    //papaiNoel.notify();
-                }
-                
-                //Acordar papai noel.
-            }else{
-                /*if(papaiNoel.isAcordado()){
-                    
-                }*/
-                
+
                 if(elfos.getProblemasElfos(this.getIdElfo())){
                     System.out.println("ELFO " + this.getIdElfo() + ": Continuo com o problema...");
                     
                 }else{
+                    
+                    this.fabricarBrinquedos();
+                    
                     // Gera número randômico de 0 a 5 para definir problemas na fabricação de brinquedos
                     int numero = gerador.nextInt((6));
                     if(numero == 5){
                         System.out.println("ELFO " + this.getIdElfo() + ": Ops, tive um problema aqui!" );
                         elfos.addElfosProblemasBrinquedos(this.idElfo); 
-                    }else{
-                        this.fabricarBrinquedos();
+                        
+                    if(elfos.elfosProblemasBrinquedos.size() == 3 && renas.renasVoltaramFeriasTropicos.size() < 9){ //Se tem no mínimo 3 elfos com problemas
+                        System.out.println("ELFO " + this.getIdElfo() + ": Estamos com problemas!");
+                        elfos.removeElfosProblemasBrinquedos();
+
+                        this.reunirPapaiNoel();
+
+                        synchronized(papaiNoel){
+                            papaiNoel.acordar(); 
+                            papaiNoel.discutirProjetos();
+                            papaiNoel.dormir();
+                        }
+                        
                     }
                 }
                 
                 elfos.notifyAll();
-                /*this.produtos.setAddEstoque(valor);
-                System.out.println("|Produtor|- " + this.getName() + "\t - Novo produto adicionado" + valor);
-                produtos.notifyAll();*/
             }
         }
     }
