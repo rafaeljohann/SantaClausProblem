@@ -40,7 +40,7 @@ public class Rena extends Thread {
     }
     
     public void acordarPapaiNoel(){
-        System.out.println("RENA " + this.getIdRena()+ ": Acordar o Papai Noel...");
+        System.out.println("RENAS: Acordar o Papai Noel...");
     }
     
     public void viver(){
@@ -56,7 +56,7 @@ public class Rena extends Thread {
                         renas.addRenasVoltouFerias(this.idRena); 
                     
                         if(renas.renasVoltaramFeriasTropicos.size() == 9){ //Se as 9 renas voltaram de férias
-                            System.out.println("RENA " + this.getIdRena()+ ": Voltamos de férias!");
+                            System.out.println("RENAS: Voltamos de férias!");
                             renas.removeRenasFerias();
 
                             this.acordarPapaiNoel();

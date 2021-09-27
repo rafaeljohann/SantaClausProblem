@@ -48,16 +48,6 @@ public class SantaClausProblem {
         elfos.forEach((elfo) -> {
             elfo.start();
         });
-        
-        /*for(Rena rena : renas){
-            qtdRenas++;
-        }
-        
-        if(qtdRenas == renas.size()){
-            papaiNoel.acordar();
-        }*/
-        
-        
     }
     
 }

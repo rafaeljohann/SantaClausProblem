@@ -5,6 +5,8 @@
  */
 package santaclausproblem.entities;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Rafael
@@ -24,19 +26,21 @@ public class PapaiNoel extends Thread {
     }
     
     public void amarrarRenaTreno(){
-        System.out.println("PAPAI NOEL: Amarrando a rena...");
+        System.out.println("PAPAI NOEL: Amarrando as renas ao trenó...");
     }
     
     public void desamarrarRenaTreno(){
-        System.out.println("PAPAI NOEL: Desamarrando a rena...");
+        System.out.println("PAPAI NOEL: Desamarrando as renas do trenó...");
     }
     
     public void distribuirBrinquedos(){
         System.out.println("PAPAI NOEL: Distribuindo brinquedos...");
     }
     
-    public void discutirProjetos(){
-        System.out.println("PAPAI NOEL: Discutindo projetos de brinquedo...");
+    public void discutirProjetos(ArrayList elfos){
+        for(int i = 0; i < elfos.size(); i++){
+            System.out.println("PAPAI NOEL: Discutindo projetos de brinquedo com elfo " + elfos.get(i) + "...");
+        }
     }
     
     @Override

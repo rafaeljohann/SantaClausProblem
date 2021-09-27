@@ -5,6 +5,7 @@
  */
 package santaclausproblem.entities;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,7 +44,7 @@ public class Elfo extends Thread {
     }
     
     public void reunirPapaiNoel(){
-        System.out.println("ELFO " + this.getIdElfo() + ": Se reunindo com o Papai Noel...");
+        System.out.println("ELFOS: Se reunindo com o Papai Noel...");
     }
     
     public void viver() throws InterruptedException{
@@ -63,16 +64,18 @@ public class Elfo extends Thread {
                         elfos.addElfosProblemasBrinquedos(this.idElfo); 
                         
                     if(elfos.elfosProblemasBrinquedos.size() == 3 && renas.renasVoltaramFeriasTropicos.size() < 9){ //Se tem no mínimo 3 elfos com problemas
-                        System.out.println("ELFO " + this.getIdElfo() + ": Estamos com problemas!");
-                        elfos.removeElfosProblemasBrinquedos();
+                        System.out.println("ELFOS: Estamos com problemas!");
+                        
 
                         this.reunirPapaiNoel();
 
                         synchronized(papaiNoel){
                             papaiNoel.acordar(); 
-                            papaiNoel.discutirProjetos();
+                            papaiNoel.discutirProjetos((ArrayList) elfos.elfosProblemasBrinquedos);
                             papaiNoel.dormir();
                         }
+                        
+                        elfos.removeElfosProblemasBrinquedos();
                         
                     }
                 }
