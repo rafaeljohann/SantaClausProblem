@@ -54,7 +54,6 @@ public class Elfo extends Thread {
                     System.out.println("ELFO " + this.getIdElfo() + ": Continuo com o problema...");
                     
                 }else{
-                    
                     this.fabricarBrinquedos();
                     
                     // Gera número randômico de 0 a 5 para definir problemas na fabricação de brinquedos
