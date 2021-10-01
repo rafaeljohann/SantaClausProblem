@@ -40,6 +40,13 @@ public class Rena extends Thread {
     }
     
     public void interagirPapaiNoel(){
+        try{
+                Thread.sleep((int)(2));
+            }
+            catch (InterruptedException e){
+                e.printStackTrace();
+            }
+        
         System.out.println("RENAS: Voltamos de férias!");
         System.out.println("RENAS: Acordar o Papai Noel...");
         
@@ -66,8 +73,8 @@ public class Rena extends Thread {
             this.tirarFerias();
         }
         
-        int numero = gerador.nextInt((3));
-        if(numero == 2 && !voltouFerias){
+        int numero = gerador.nextInt((11));
+        if(numero == 5 && !voltouFerias){
             System.out.println("RENA " + this.getIdRena()+ ": Voltei de férias..." );
             
             synchronized(renas){
