@@ -39,12 +39,50 @@ public class Rena extends Thread {
         System.out.println("RENA " + this.getIdRena() + ": Tirando férias...");
     }
     
-    public void acordarPapaiNoel(){
+    public void interagirPapaiNoel(){
+        System.out.println("RENAS: Voltamos de férias!");
         System.out.println("RENAS: Acordar o Papai Noel...");
+        
+        synchronized(papaiNoel){
+            papaiNoel.acordar(); 
+            papaiNoel.amarrarRenaTreno();
+            papaiNoel.distribuirBrinquedos();
+            papaiNoel.desamarrarRenaTreno();
+            papaiNoel.dormir();
+        }
     }
     
     public void viver(){
-        synchronized (renas) {
+        boolean voltouFerias = false;
+        
+        synchronized(renas){
+            if(renas.getVoltouFeriasRenas(this.getIdRena())){
+                System.out.println("RENA " + this.getIdRena()+ ": Continuo aguardando para acordar Papai Noel...");
+                voltouFerias = true;
+            }
+        }
+        
+        if(!voltouFerias){
+            this.tirarFerias();
+        }
+        
+        int numero = gerador.nextInt((3));
+        if(numero == 2 && !voltouFerias){
+            System.out.println("RENA " + this.getIdRena()+ ": Voltei de férias..." );
+            
+            synchronized(renas){
+                renas.addRenasVoltouFerias(this.idRena); 
+
+                if(renas.renasVoltaramFeriasTropicos.size() == 9){ //Se as 9 renas voltaram de férias
+                    this.interagirPapaiNoel();
+                    renas.removeRenasFerias();
+                } 
+            }
+        }    
+        
+        
+        
+       /* synchronized (renas) {
                 if(renas.getVoltouFeriasRenas(this.getIdRena())){
                     System.out.println("RENA " + this.getIdRena()+ ": Continuo aguardando para acordar Papai Noel...");
                 }else{
@@ -72,7 +110,7 @@ public class Rena extends Thread {
                     }               
                 renas.notifyAll();
             }
-        }
+        }*/
     }
     
     @Override

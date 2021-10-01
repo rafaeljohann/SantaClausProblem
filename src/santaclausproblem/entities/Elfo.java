@@ -43,15 +43,54 @@ public class Elfo extends Thread {
         System.out.println("ELFO " + this.getIdElfo() + ": Fabricando brinquedos...");
     }
     
+    public void validaElfosProblemas(){
+        if(elfos.elfosProblemasBrinquedos.size() == 3 && renas.renasVoltaramFeriasTropicos.size() < 9){ //Se tem no mínimo 3 elfos com problemas
+            this.reunirPapaiNoel();
+            elfos.removeElfosProblemasBrinquedos();
+        }
+    }
+    
     public void reunirPapaiNoel(){
+        System.out.println("ELFOS: Estamos com problemas!");
         System.out.println("ELFOS: Se reunindo com o Papai Noel...");
+        
+        synchronized(papaiNoel){
+            papaiNoel.acordar(); 
+            papaiNoel.discutirProjetos((ArrayList) elfos.elfosProblemasBrinquedos);
+            papaiNoel.dormir();
+        }
     }
     
     public void viver() throws InterruptedException{
+        boolean problemas = false;
+        
         synchronized (elfos) {
+            if(elfos.getProblemasElfos(this.getIdElfo())){
+                System.out.println("ELFO " + this.getIdElfo() + ": Continuo com o problema..."); 
+                problemas = true;
+            }
+            
+            // Validação caso a última rena voltou dos trópicos na iteração anterior.
+             validaElfosProblemas();
+        }
+        
+        if(!problemas){
+            this.fabricarBrinquedos();
+        }
+        
+        int numero = gerador.nextInt((6));
+        if(numero == 5 && !problemas){
+            System.out.println("ELFO " + this.getIdElfo() + ": Ops, tive um problema aqui!" );
+            
+            synchronized(elfos){
+                elfos.addElfosProblemasBrinquedos(this.idElfo);
+                validaElfosProblemas();
+            }
+        }
+       /* synchronized (elfos) {
 
                 if(elfos.getProblemasElfos(this.getIdElfo())){
-                    System.out.println("ELFO " + this.getIdElfo() + ": Continuo com o problema...");
+                    System.out.println("ELFO " + this.getIdElfo() + ": Continuo com o problema..."); 
                     
                 }else{
                     this.fabricarBrinquedos();
@@ -81,7 +120,7 @@ public class Elfo extends Thread {
                 
                 elfos.notifyAll();
             }
-        }
+        }*/
     }
     
     @Override

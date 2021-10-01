@@ -31,22 +31,22 @@ public class SantaClausProblem {
         
         papaiNoel.start();
         
-        for(int i = 0; i < 9; i++){ // modificar contador depois
-            Rena rena = new Rena(i + 1, listaRenas, papaiNoel);
-            renas.add(rena);
-        }
-        
-        renas.forEach((rena) -> {
-            rena.start();
-        });
-        
-        for(int i = 0; i < 10; i++){ // modificar contador depois
+        for(int i = 0; i < 10; i++){
             Elfo elfo = new Elfo(i + 1, listaElfos, papaiNoel, listaRenas);
             elfos.add(elfo);
         }
         
         elfos.forEach((elfo) -> {
             elfo.start();
+        });
+        
+        for(int i = 0; i < 9; i++){
+            Rena rena = new Rena(i + 1, listaRenas, papaiNoel);
+            renas.add(rena);
+        }
+        
+        renas.forEach((rena) -> {
+            rena.start();
         });
     }
     
