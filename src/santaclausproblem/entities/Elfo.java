@@ -44,7 +44,10 @@ public class Elfo extends Thread {
     }
     
     public void validaElfosProblemas(){
-        if(elfos.elfosProblemasBrinquedos.size() == 3 && renas.renasVoltaramFeriasTropicos.size() < 9){ //Se tem no mínimo 3 elfos com problemas
+        //System.out.println("Elfos com Problemas: " + elfos.elfosProblemasBrinquedos.size());
+        //System.out.println("Renas com problemas: " + renas.renasVoltaramFeriasTropicos.size());
+        
+        if(elfos.elfosProblemasBrinquedos.size() == 3 && renas.renasVoltaramFeriasTropicos.size() < 9){ //Se tem no mínimo 3 elfos com problemas, mas as renas não voltaram totalmente
             this.reunirPapaiNoel();
             elfos.removeElfosProblemasBrinquedos();
         }
@@ -71,7 +74,7 @@ public class Elfo extends Thread {
             }
             
             // Validação caso a última rena voltou dos trópicos na iteração anterior.
-             validaElfosProblemas();
+            validaElfosProblemas();
         }
         
         if(!problemas){
@@ -87,40 +90,6 @@ public class Elfo extends Thread {
                 validaElfosProblemas();
             }
         }
-       /* synchronized (elfos) {
-
-                if(elfos.getProblemasElfos(this.getIdElfo())){
-                    System.out.println("ELFO " + this.getIdElfo() + ": Continuo com o problema..."); 
-                    
-                }else{
-                    this.fabricarBrinquedos();
-                    
-                    // Gera número randômico de 0 a 5 para definir problemas na fabricação de brinquedos
-                    int numero = gerador.nextInt((6));
-                    if(numero == 5){
-                        System.out.println("ELFO " + this.getIdElfo() + ": Ops, tive um problema aqui!" );
-                        elfos.addElfosProblemasBrinquedos(this.idElfo); 
-                        
-                    if(elfos.elfosProblemasBrinquedos.size() == 3 && renas.renasVoltaramFeriasTropicos.size() < 9){ //Se tem no mínimo 3 elfos com problemas
-                        System.out.println("ELFOS: Estamos com problemas!");
-                        
-
-                        this.reunirPapaiNoel();
-
-                        synchronized(papaiNoel){
-                            papaiNoel.acordar(); 
-                            papaiNoel.discutirProjetos((ArrayList) elfos.elfosProblemasBrinquedos);
-                            papaiNoel.dormir();
-                        }
-                        
-                        elfos.removeElfosProblemasBrinquedos();
-                        
-                    }
-                }
-                
-                elfos.notifyAll();
-            }
-        }*/
     }
     
     @Override

@@ -39,14 +39,7 @@ public class Rena extends Thread {
         System.out.println("RENA " + this.getIdRena() + ": Tirando férias...");
     }
     
-    public void interagirPapaiNoel(){
-        try{
-                Thread.sleep((int)(2));
-            }
-            catch (InterruptedException e){
-                e.printStackTrace();
-            }
-        
+    public void interagirPapaiNoel(){    
         System.out.println("RENAS: Voltamos de férias!");
         System.out.println("RENAS: Acordar o Papai Noel...");
         
@@ -85,39 +78,7 @@ public class Rena extends Thread {
                     renas.removeRenasFerias();
                 } 
             }
-        }    
-        
-        
-        
-       /* synchronized (renas) {
-                if(renas.getVoltouFeriasRenas(this.getIdRena())){
-                    System.out.println("RENA " + this.getIdRena()+ ": Continuo aguardando para acordar Papai Noel...");
-                }else{
-                    this.tirarFerias();
-                    
-                    int numero = gerador.nextInt((11));
-                    if(numero == 10){
-                        System.out.println("RENA " + this.getIdRena()+ ": Voltei de férias..." );
-                        renas.addRenasVoltouFerias(this.idRena); 
-                    
-                        if(renas.renasVoltaramFeriasTropicos.size() == 9){ //Se as 9 renas voltaram de férias
-                            System.out.println("RENAS: Voltamos de férias!");
-                            renas.removeRenasFerias();
-
-                            this.acordarPapaiNoel();
-
-                            synchronized(papaiNoel){
-                                papaiNoel.acordar(); 
-                                papaiNoel.amarrarRenaTreno();
-                                papaiNoel.distribuirBrinquedos();
-                                papaiNoel.desamarrarRenaTreno();
-                                papaiNoel.dormir();
-                            }
-                        }
-                    }               
-                renas.notifyAll();
-            }
-        }*/
+        }
     }
     
     @Override

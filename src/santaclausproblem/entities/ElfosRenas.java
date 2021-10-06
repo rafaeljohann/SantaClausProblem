@@ -13,8 +13,6 @@ import java.util.List;
  * @author Rafael
  */
 public class ElfosRenas {
-    int qtdElfos=10;
-    int elfosQtdProblemasBrinquedos;
     List<Integer> elfosProblemasBrinquedos = new ArrayList<>();
     List<Integer> renasVoltaramFeriasTropicos = new ArrayList<>();
     
